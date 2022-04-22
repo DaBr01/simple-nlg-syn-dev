@@ -1207,5 +1207,38 @@ abstract public class Feature {
 	 * </table>
 	 */
 	public static final String ARTICLE_FORM = "article_form";
+
+	/**
+	 * <p>
+	 * This features indicates if a word might be replaced by one of its defined synonyms in the realisation.
+	 * </p>
+	 * <table border="1">
+	 * <tr>
+	 * <td><b>Feature name</b></td>
+	 * <td><em>synonym_replacement</em></td>
+	 * </tr>
+	 * <tr>
+	 * <td><b>Expected type</b></td>
+	 * <td><code>Boolean</code></td>
+	 * </tr>
+	 * <tr>
+	 * <td><b>Created by</b></td>
+	 * <td>The user.</td>
+	 * </tr>
+	 * <tr>
+	 * <td><b>Used by</b></td>
+	 * <td>???</td>
+	 * </tr>
+	 * <tr>
+	 * <td><b>Applies to</b></td>
+	 * <td>All clauses.</td>
+	 * </tr>
+	 * <tr>
+	 * <td><b>Default</b></td>
+	 * <td><code>Boolean.FALSE</code>.</td>
+	 * </tr>
+	 * </table>
+	 */
+	public static final String SYNONYM_REPLACEMENT = "synonym_replacement";
 	
 }

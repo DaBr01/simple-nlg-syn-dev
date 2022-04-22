@@ -21,12 +21,7 @@ package simplenlgde.framework;
 
 import simplenlgde.features.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * This is the class for a lexical entry (ie, a word). Words are stored in a
@@ -46,6 +41,8 @@ public class WordElement extends NLGElement {
     // will be removed from there
 
     String id; // id in lexicon (may be null);
+
+    WordElement[] synonyms = new WordElement[]{}; // array of synonyms a word can potentially be replaced with
 
 
     // LexicalCategory category; // type of word
@@ -293,5 +290,20 @@ public class WordElement extends NLGElement {
 				break;
 		}
 	}
+    /**
+     * Returns the synonyms of the word
+    * @return array of word elements with the synonyms
+     */
+    public WordElement[] getSynonyms() {
+        return synonyms;
+    }
+
+    /**
+     * @param synonyms
+     *            Sets the synonyms of the word
+     */
+    public void setSynonyms(WordElement[] synonyms) {
+        this.synonyms = synonyms;
+    }
 }
 

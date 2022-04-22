@@ -105,6 +105,15 @@ public class SyntaxProcessor extends NLGModule {
                 realisedElement = element;
 
             } else if (element instanceof WordElement) {
+                // TODO
+                /*if(((WordElement) element).getBaseForm().equals("Auto")){
+                    ((WordElement) element).setSynonyms(new WordElement[]{lexicon.getWord("Kutsche")});
+                }*/
+
+                if(((WordElement) element).getSynonyms().length > 0){
+                    element = ((WordElement) element).getSynonyms()[0];
+                }
+
                 // need to check if it's a word element, in which case it
                 // needs to be marked for inflection
                 InflectedWordElement infl = new InflectedWordElement(

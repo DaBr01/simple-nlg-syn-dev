@@ -44,6 +44,9 @@ public abstract class NLGElement {
     /** The NLGFactory which created this element */
     private NLGFactory factory;
 
+    /** Can the element be replaced by a synonym? False by default **/
+    private boolean replaceWithSynonym = false;
+
     /**
      * Sets the category of this element.
      *
@@ -693,5 +696,11 @@ public abstract class NLGElement {
         return eq;
     }
 
+    public boolean canReplaceWithSynonym() {
+        return replaceWithSynonym;
+    }
 
+    public void setReplaceWithSynonym(boolean replaceWithSynonym) {
+        this.replaceWithSynonym = replaceWithSynonym;
+    }
 }

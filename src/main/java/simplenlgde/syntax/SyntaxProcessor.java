@@ -24,6 +24,7 @@ package simplenlgde.syntax;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import simplenlgde.framework.*;
 import simplenlgde.orthograpgy.OrthographyProcessor;
@@ -110,9 +111,11 @@ public class SyntaxProcessor extends NLGModule {
                     ((WordElement) element).setSynonyms(new WordElement[]{lexicon.getWord("Kutsche")});
                 }*/
 
-                if(((WordElement) element).getSynonyms().length > 0){
-                    element = ((WordElement) element).getSynonyms()[0];
-                }
+                // replace with synonym if activated
+                /*if(((WordElement) element).canReplaceWithSynonym() && ((WordElement) element).getSynonyms().length > 0){
+                    int rnd = new Random().nextInt(((WordElement) element).getSynonyms().length);
+                    element = ((WordElement) element).getSynonyms()[rnd];
+                }*/
 
                 // need to check if it's a word element, in which case it
                 // needs to be marked for inflection

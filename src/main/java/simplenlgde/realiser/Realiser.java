@@ -20,12 +20,12 @@ package simplenlgde.realiser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-import simplenlgde.framework.DocumentCategory;
-import simplenlgde.framework.DocumentElement;
-import simplenlgde.framework.NLGElement;
-import simplenlgde.framework.NLGModule;
+import simplenlgde.framework.*;
 import simplenlgde.morphology.MorphologyProcessor;
+import simplenlgde.phrasespec.SPhraseSpec;
+import simplenlgde.phrasespec.VPPhraseSpec;
 import simplenlgde.syntax.SyntaxProcessor;
 import simplenlgde.orthograpgy.OrthographyProcessor;
 import simplenlgde.format.german.TextFormatter;
@@ -77,8 +77,41 @@ public class Realiser extends NLGModule {
         this.formatter.initialise();
     }
 
+    public NLGElement replaceSynonyms(NLGElement element) {
+        if(element instanceof DocumentElement){
+            for (int i = 0; i < ((DocumentElement) element).getComponents().size(); i++) {
+                ((DocumentElement) element).getComponents().set(i, replaceSynonyms(((DocumentElement) element).getComponents().get(i)));
+            }
+        }
+        else if(element instanceof PhraseElement){
+            for(String feature: element.getAllFeatureNames()){
+                List<NLGElement> elements = element.getFeatureAsElementList(feature);
+                for(int i = 0; i < elements.size(); i++){
+                    elements.set(i, replaceSynonyms(elements.get(i)));
+                }
+                if(elements.size() > 0) {
+                    ((PhraseElement) element).setFeature(feature, elements.get(0));
+                }
+            }
+        }
+        else if(element instanceof WordElement){
+            if(((WordElement) element).canReplaceWithSynonym() && ((WordElement) element).getSynonyms().length > 0){
+                int rnd = new Random().nextInt(((WordElement) element).getSynonyms().length);
+                element = ((WordElement) element).getSynonyms()[rnd];
+            }
+        }
+        else{
+            for(int i = 0; i < element.getChildren().size(); i++){
+                element.getChildren().set(i, replaceSynonyms(element.getChildren().get(i)));
+            }
+        }
+
+        return element;
+    }
+
     @Override
     public NLGElement realise(NLGElement element) {
+        element = replaceSynonyms(element);
 
         StringBuilder debug = new StringBuilder();
 

@@ -13,15 +13,20 @@
  */
 
 
+import org.junit.jupiter.api.Assertions;
 import simplenlgde.framework.NLGElement;
 import simplenlgde.framework.NLGFactory;
 import simplenlgde.framework.WordElement;
 import simplenlgde.lexicon.Lexicon;
 import simplenlgde.lexicon.XMLLexicon;
+import simplenlgde.phrasespec.AdjPhraseSpec;
 import simplenlgde.phrasespec.NPPhraseSpec;
 import simplenlgde.phrasespec.SPhraseSpec;
 import simplenlgde.phrasespec.VPPhraseSpec;
 import simplenlgde.realiser.Realiser;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class SynonymTest {
     private Lexicon lexicon;
@@ -46,9 +51,61 @@ public class SynonymTest {
         SPhraseSpec sentence = nlgFactory.createClause();
         sentence.setSubject(np);
         sentence.setVerb(vp);
-        System.out.println(realiser.realiseSentence(sentence));
+        String output = realiser.realiseSentence(sentence);
+        System.out.println(output);
 
-        String output = "";
+        String expectedOutput[] = {"Das Auto fährt.", "Das Kraftfahrzeug fährt.", "Die Kutsche fährt."};
+        List<String> expectedOutcomesList = Arrays.asList(expectedOutput);
+
+        Assertions.assertTrue(expectedOutcomesList.contains(output));
+    }
+
+    public void testSynonym2(){
+        NPPhraseSpec np = nlgFactory.createNounPhrase("Auto");
+        np.setDeterminer("das");
+
+        VPPhraseSpec vp = nlgFactory.createVerbPhrase("fahren");
+
+
+        /** set list of synonyms **/
+        ((WordElement) vp.getVerb()).setSynonyms(new WordElement[]{lexicon.getWord("schleichen")});
+        ((WordElement) vp.getVerb()).setReplaceWithSynonym(true);
+
+        SPhraseSpec sentence = nlgFactory.createClause();
+        sentence.setSubject(np);
+        sentence.setVerb(vp);
+        String output = realiser.realiseSentence(sentence);
+        System.out.println(output);
+
+        String expectedOutput[] = {"Das Auto fährt.", "Das Auto schleicht."};
+        List<String> expectedOutcomesList = Arrays.asList(expectedOutput);
+
+        Assertions.assertTrue(expectedOutcomesList.contains(output));
+    }
+
+    public void testSynonym3(){
+        NPPhraseSpec np = nlgFactory.createNounPhrase("Auto");
+        np.setDeterminer("das");
+
+        AdjPhraseSpec adj = nlgFactory.createAdjectivePhrase("schön");
+        /** set list of synonyms **/
+        ((WordElement) adj.getAdjective()).setSynonyms(new WordElement[]{lexicon.getWord("hübsch")});
+        ((WordElement) adj.getAdjective()).setReplaceWithSynonym(true);
+
+        np.addModifier(adj);
+
+        VPPhraseSpec vp = nlgFactory.createVerbPhrase("fahren");
+
+        SPhraseSpec sentence = nlgFactory.createClause();
+        sentence.setSubject(np);
+        sentence.setVerb(vp);
+        String output = realiser.realiseSentence(sentence);
+        System.out.println(output);
+
+        String expectedOutput[] = {"Das schöne Auto fährt.", "Das hübsche Auto fährt."};
+        List<String> expectedOutcomesList = Arrays.asList(expectedOutput);
+
+        Assertions.assertTrue(expectedOutcomesList.contains(output));
     }
 
 }

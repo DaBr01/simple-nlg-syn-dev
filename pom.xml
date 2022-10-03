@@ -4,7 +4,7 @@
 
     <groupId>com.github.sebischair</groupId>
     <artifactId>SimpleNLG-DE</artifactId>
-    <version>1.1</version>
+    <version>1.2-beta-1</version>
     <packaging>jar</packaging>
 
     <name>SimpleNLG-DE</name>
@@ -54,13 +54,10 @@
     </dependencies>
 
     <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
         <repository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>github</id>
+            <name>DaBr01</name>
+            <url>https://maven.pkg.github.com/DaBr01/simple-nlg-syn-dev</url>
         </repository>
     </distributionManagement>
 
